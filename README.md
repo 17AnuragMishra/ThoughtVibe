@@ -1,17 +1,17 @@
-# SYO Blog Application 🚀
+# ThoughtVibe Blog Application 🚀
 
-Welcome to **SYO**, the ultimate platform for bloggers and developers! SYO offers a feature-rich environment where you can create, share, and interact with content effortlessly. 
+Welcome to **ThoughtVibe**, the ultimate platform for bloggers and developers! ThoughtVibe offers a feature-rich environment where you can create, share, and interact with content effortlessly. 
 
 ## Features ✨
 
 ### 📝 **Feature-Rich Blogging**
-- **Markdown Support**: Write and format your posts with ease using markdown, including code snippets.
+- **Markdown Support**: Write and format your posts easily using markdown, including code snippets.
 - **Cloud Storage**: Seamlessly upload and manage your images and files with our integrated cloud storage.
-- **Beautiful Themes**: Choose between light and dark mode to suit your preference.
+- **Beautiful Themes**: Choose between light and dark modes to suit your preference.
 
 ### 🌐 **Interactive Community**
 - **Engage with Others**: Comment on posts and interact with other blogs to build a vibrant community.
-- **Follow Blogs**: Stay updated with your favorite blogs by following them.
+- **Follow Blogs**: Stay updated with your favourite blogs by following them.
 - **Share and Promote**: Easily share your articles on social media to reach a broader audience.
 
 ### 📊 **Personalized Experience**
@@ -21,13 +21,13 @@ Welcome to **SYO**, the ultimate platform for bloggers and developers! SYO offer
 
 ## Installation 📦
 
-To get started with SYO, follow these steps:
+To get started with ThoughtVibe, follow these steps:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/syo-blog-application.git
+   git clone https://github.com/your-username/ThoughtVibe.git
 2. **Navigate to the project directory:**
-   ```cd syo-blog-application
+   ```cd ThoughtVibe-blog-application
 3. **Install dependencies:**
    ```npm install
 4. **Start the application:**
