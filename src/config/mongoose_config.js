@@ -23,7 +23,8 @@ const clientOptions = {
         version: '1',
         strict: true,
         deprecationErrors: true
-    }
+    },
+    dbName: 'ThoughtVibe'
 }
 
 

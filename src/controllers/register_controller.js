@@ -1,60 +1,43 @@
 
-
-'use strict';
-/**
- * node module
- */
-
-const bcrypt = require('bcrypt'); 
-
-
-
-/**
- *  custom modules
- */
-
+const bcrypt = require('bcrypt');
 const User = require('../models/user_model');
 const generateUsername = require('../utils/generate_username_utils');
 
-/**
- * 
- * @param {object} req 
- * @param {object} res 
- */
 const renderRegister = (req, res) => {
+    const { userAuthenticated } = req.session.user || {};
+
+    if(userAuthenticated){
+        return res.redirect('/'); 
+    }
+    
     res.render('./pages/register');
 }
 
-/**
- * 
- * @param {object} res - the response object 
- * @param {object} req  - Thre request object
- */
-
 const postRegister = async (req, res) => {
     try {
-        //user data handle
+        const { name, email, password } = req.body;
 
-        const {name, email, password }  = req.body;
-
-        //create username
         const username = generateUsername(name);
-        
-        //password hash
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // create user with provided data
         await User.create({ name, email, password: hashedPassword, username });
 
-        //redirect user to login page upon success
         res.redirect('/login');
-
-    
-    }catch (error) {
-
+    } catch (error) {
+        if(error.code === 11000){
+            if(error.keyPattern.email){
+                return res.status(400).json({ message: 'This email is already linked with an another account'});
+            }
+        }else{
+            return res.status(400).send({message: `Failed to register user.<br>${error.message}`});
+        }
+        
+        console.log('postRegister: ', error.message);
+        throw error;
     }
 }
 
 module.exports = {
-    renderRegister
+    renderRegister,
+    postRegister
 }

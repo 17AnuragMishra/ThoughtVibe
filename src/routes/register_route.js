@@ -1,23 +1,10 @@
+'use strict'
 
-'use strict';
+const express = require('express');
+const router = express.Router();
+const { renderRegister, postRegister } = require('../controllers/register_controller');
 
-/**
- * node modules
- */
-
-const router = require("express").Router();
-
-/**
- * custom modules
- */
-
-const { renderRegister } = require("../controllers/register_controller")
-
-//GET route: Render the registration form
 router.get('/', renderRegister);
-
-
-//POST route: Handles from submission for user registration
-router.post('/', renderRegister);
+router.post('/', postRegister);
 
 module.exports = router;

@@ -5,6 +5,13 @@
 
 'use strict';
 
+
+/**
+ * IMoprt module
+ */
+
+import Snackbar from "./snackbar.js";
+
 const $form = document.querySelector('[data-form]');
 const $submitBtn = document.querySelector('[data-submit-btn]');
 
@@ -21,7 +28,10 @@ $form.addEventListener('submit', async (event) => {
     //password mismatch
     if(formData.get('password') != formData.get('confirm_password')){
         $submitBtn.removeAttribute('disabled');
-        console.error('Password Mismatch');
+        Snackbar({
+            type: 'error',
+            message: 'pls ensure your password matches with the confirm-password'
+        });
         return;
     }
 
@@ -38,5 +48,16 @@ $form.addEventListener('submit', async (event) => {
     if(response.ok){
         //user to login page
         return window.location = response.url;
+    }
+
+    if(response.status === 400){
+
+        //remove the submit btn
+        $submitBtn.removeAttribute('disabled');
+        const { message } = await response.json();
+        Snackbar({
+            type: 'error',
+            message
+        });
     }
 })
