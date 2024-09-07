@@ -1,28 +1,142 @@
 <%
-    console.log(locals)
+    const {
+        userAuthenticated,
+        name,
+        username
+    } = locals.sessionUser || {};
 %>
 
 <header class="top-app-bar" data-top-app-bar>
 
+    <% if (locals.route === '/createblog') { %> 
+        <button class="icon btn filled-tonal" aria-label="Go to previous page" data-back-btn>
+            <span class="material-symbols-outlined">
+                keyboard_arrow_left
+                </span>
+            <div class="state-layer"></div>
+        </button>
+    <% } %>
+
     <a href="/" class="logo">
-        <img src="/images/logo-light.svg" width="98" height="24" alt="ThoughtVibe" class="light">
-        <img src="/images/logo-dark.svg" width="98" height="24" alt="ThoughtVibe" class="dark">
+        <img src="/images/thoughtvibe-logo-white-transparent.svg" width="98" height="24" alt="ThoughtVibe" class="light">
+        <img src="/images/thoughtvibe-logo-black-transparent.svg" width="98" height="24" alt="ThoughtVibe" class="dark">
     </a>
 
     <div class="trailing-action-wrapper">
-        <a href="/createblog" class="btn btn-fill">
+        
+        <% if (userAuthenticated) { %>
+            <% if (locals.route !== '/createblog') { %>
+                <a href="/createblog" class="btn btn-fill">
             <span class="material-symbols-outlined">
                 edit
             </span>
             <p class="Label-large">Write</p>
             <div class="state-layer"></div>
-        </a>    
-        <div class="menu-wrapper" data-menu-wrapper>
+                </a>    
+             <% } %>
+            <div class="menu-wrapper" data-menu-wrapper>
             <button class="icon-btn" data-menu-toggler>
                 <div class="avatar">
-                    <p class="title-medium"></p>
+                    <p class="title-medium">
+                        <%=name.at()%>
+                    </p>
                 </div>
+                <div class="state-layer"></div>
             </button>
-        </div>
+
+            <div class="menu" data-menu>
+
+                <div class="list-item small">
+                    <div class="avatar">
+                        <p class="title-medium">
+                            <%=name.at()%>
+                        </p>
+                    </div>
+                    <div>
+                        <p class="label-small text-primary truncate-online">
+                            <%=username%>
+                        </p>
+                        <p class="body-large text-on-surface">
+                            <%=name%>
+                        </p>
+                    </div>
+
+                    <div class="state-layer"></div>
+
+                    <a href="/profile/<%=username%>" title="<%=name%>" class="list-item-link"></a>
+                </div>
+
+                <div class="divider"></div>
+                
+                <a href="/dashboard" class="menu-item">
+                    <span class="material-symbols-outlined" aria-hidden="true">
+                        dashboard
+                    </span>
+
+                    <p class="label-large">Dashboard</p>
+
+                    <div class="state-layer"></div>
+                </a>
+
+                <a href="/readingList" class="menu-item">
+                    <span class="material-symbols-outlined" aria-hidden="true">
+                        bookmark
+                    </span>
+
+                    <p class="label-large">Reading List</p>
+
+                    <div class="state-layer"></div>
+                </a>
+
+                <a href="/settings" class="menu-item">
+                    <span class="material-symbols-outlined">
+                        settings
+                    </span>
+
+                    <p class="label-large">Setting</p>
+
+                    <div class="state-layer"></div>
+                </a>
+
+                <div class="divider"></div>
+
+                <form action="/logout" method="post">
+                    <button type="submit" class="menu-item">
+                        
+                        <span class="material-symbols-outlined">
+                            logout
+                        </span>
+    
+                        <p class="label-large">Sign out</p>
+    
+                        <div class="state-layer"></div>
+
+                    </button>
+                </form>
+            </div>    
+            </div>
+
+        <% } else { %>
+            <a href="/login" class="btn btn-text">
+            <p class="label-large">Login</p>
+
+            <div class="state-layer"></div>
+            </a>
+
+            <a href="/register" class="btn btn-fill">
+            <p class="label-large">Register</p>
+
+            <div class="state-layer"></div>
+            </a>
+        <% } %>
     </div>
+
+<!-- Prograss BAR -->
+
+
+<div class="progress-bar" data-progress-bar>
+    <div class="prograss-active-indicator"></div>
+    <div class="progrss-track"></div>
+</div>
+
 </header>

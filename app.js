@@ -14,6 +14,7 @@ const register = require("./src/routes/register_route");
 const login = require("./src/routes/login_route");
 const { connectDB, disconnectDB } = require('./src/config/mongoose_config')
 const home = require('./src/routes/home_route');
+const createBlog = require('./src/routes/create_blog_route'); 
 
 
 /**
@@ -41,9 +42,14 @@ app.use(express.static(`${__dirname}/public`));
 app.use(express.urlencoded({ extended: true }));
 
 /**
- * instance for season store
+ * parse json bodies
  */
 
+app.use(express.json({ limit: '10mb' }));
+
+/**
+ * instance for season store
+ */
 const store = new MongoStore({
     mongoUrl: process.env.MONGO_CONNECTION_URI,
     collectionName: 'sessions',
@@ -80,6 +86,13 @@ app.use('/login', login);
  * Home page
  */
 app.use('/', home);
+
+
+/**
+ * blog page
+ */
+app.use('/createblog', createBlog);
+
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(3000, async function () {

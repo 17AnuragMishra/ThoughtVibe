@@ -10,6 +10,6 @@ const router = express.Router();
 const renderHome = require('../controllers/home_controller');
 
 //Get route: Render the home page
-router.get('/', renderHome);
+router.get(['/', '/page/:pageNumber'], renderHome);
 
 module.exports = router;

@@ -3,12 +3,41 @@
 <head>
     <%- include('../layouts/head', { title: "Home | ThoughtVibe" }) %>
     
+    <script src="/js/script.js" defer></script>
 </head>
 <body>
 
     <!-- TOP APP BAR -->
 
-    <%- include('../partials/top_app_bar') %>
+    <%- include('../partials/top_app_bar')%>
+
+
+    <main class="main">
+
+        <article class="page home-page">  
+            <div class="container">
+                <h2 class="headline-small page-title text-on-surface">
+                    Latest blogs
+                </h2>
+
+                <div class="blog-list">
+
+                    <% if (locals.latestBlogs.length) { %>
+                        <% locals.latestBlogs.forEach(blog => { %>
+                            <%- include('../partials/card', { blog }) %>
+                        <% }) %>                        
+                    <% } %>
+                </div> 
+            </div>            
+        </article>
+        
+    </main>
+
+
+    <!-- Footer -->
+
+    <%- include('../layouts/footer')%>
+
 
 </body>
 </html>
