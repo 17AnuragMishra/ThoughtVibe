@@ -1,140 +1,69 @@
-// 'use strict';
-
-// import imagePreview from './utils/imagePreview.js';
-// import Snackbar from './snackbar.js';
-// import config from './config.js';
-// import imageAsDataURL from './utils/imageAsDataUrl.js';
-
-// const $imageField = document.querySelector('[data-image-field]');
-// const $imagePreview = document.querySelector('[data-image-preview]');
-// const $imagePreviewClear = document.querySelector('[data-image-preview-clear]');
-
-// /**
-//  * @function to preview the image
-//  */
-// $imageField.addEventListener('change', () => {
-//     imagePreview($imageField, $imagePreview);
-// });
-
-// /**
-//  * @function to clearImagePreview
-//  */
-// const clearImagePreview = function () {
-//     $imagePreview.classList.remove('show');
-//     $imagePreview.innerHTML = '';
-// };
-
-// $imagePreviewClear.addEventListener('click', clearImagePreview);
-
-// /**
-//  * Publish management
-//  */
-// const $form = document.querySelector('[data-form]');
-// const $publishBtn = document.querySelector('[data-publish-btn]');
-
-// const handlePublishBlog = async function (event) {
-//     event.preventDefault();
-
-//     $publishBtn.setAttribute('disabled', '');
-
-//     const formData = new FormData($form);
-    
-//     if (!formData.get('banner').size) {
-//         $publishBtn.removeAttribute('disabled');
-//         Snackbar({ type: 'error', message: 'You didn\'t select any image for blog banner.' });
-//         return;
-//     }
-
-//     if (formData.get('banner').size > config.blogBanner.maxByteSize) {
-//         Snackbar({ type: 'error', message: 'Image should be less than 5MB.' });
-//         return;
-//     }
-
-//     try {
-//         formData.set('banner', await imageAsDataURL(formData.get('banner')));
-//         const body = Object.fromEntries(formData.entries());
-
-//         const response = await fetch(`${window.location.origin}/createblog`, {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify(body)
-//         });
-
-//         if (!response.ok) {
-//             throw new Error(`HTTP error! status: ${response.status}`);
-//         }
-
-//         const result = await response.json();
-//         Snackbar({ type: 'success', message: 'Blog published successfully!' });
-//         clearImagePreview();
-//         $form.reset(); 
-
-//     } catch (error) {
-//         console.error('Error creating new blog:', error.message);
-//         Snackbar({ type: 'error', message: 'Failed to create blog. Please try again later.' });
-//     } finally {
-//         $publishBtn.removeAttribute('disabled');
-//     }
-// };
-
-
-// if ($form) { // Check if the form element exists
-//     $form.addEventListener('submit', handlePublishBlog);
-// } else {
-//     console.error('Form element not found.');
-// }
-
-
-
-
-############## create blog controller - ################
-// 'use strict'
-
-// /**
-//  * Node module
-//  */
-// const crypto = require('crypto');
-
-
-// /**
-//  * Custom module 
-//  */
-// const uploadToCloudinary = require('../config/cloudinary_config');
-
-
-// /***
-//  * @param {object}
-//  * @param {object}
-//  */
-
-// const renderCreateBlog = (req, res) => {
-//     res.render('./pages/create_blog', {
-//         sessionUser: req.session.user,
-//         route: req.originalUrl
-//     });
-// }
-
-
-// const postCreateBlog = async (req, res) => {
-//     try{
-//         //Retrieve data
-//         const { banner, title, content } = req.body;
-
-//         //upload blog banner to cloudinary
-//         const public_id = crypto.randomBytes(10).toString('hex');
-//         const bannerURL = await uploadToCloudinary(banner,public_id);
-//         console.log(bannerURL);
-
-//     }
-//     catch(error){
-//         console.log('Error create new blog: ', error.message);
-//         throw error;
-//     }
-// }
-
-// module.exports = {
-//     renderCreateBlog,
-//     postCreateBlog
-// }
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("../partials/head.ejs",{title:"Login | MindScribe"}) %>
+<script type="module" src="/js/login.js"></script>
+  </head>
+  <body>
+    <div class="section form-section">
+      <div class="container">
+        <div class="form-card">
+          <div class="card-header">
+            <a href="/" class="logo"
+              ><img
+                src="./images/logo-light.svg"
+                alt="MindScribe"
+                class="light" />
+              <img src="./images/logo-dark.svg" alt="MindScribe" class="dark"
+            /></a>
+            <p class="body-large text-on-surface-variant">
+              Join on MindScribe community
+            </p>
+          </div>
+          <form action="" class="form" data-form >
+         
+            <div class="text-field-wrapper">
+              <label for="email" class="body-large label"> Email </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                autocomplete="email"
+                autofocus
+                placeholder=" "
+                required
+                class="body-large text-field"
+              />
+            </div>
+            <div class="text-field-wrapper">
+              <label for="password" class="body-large label"> Password </label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                autocomplete="password"
+                minlength="8"
+                autofocus
+                placeholder=" "
+                required
+                class="body-large text-field"
+              />
+            </div>
+       
+            <button type="submit" class="btn btn-fill" data-submit-btn>
+              <p class="label-large">Sign In</p>
+              <div class="state-layer"></div>
+            </button>
+          </form>
+          <div class="card-footer">
+            <p class="label-large">New to MindScribe?</p>
+            <a href="/register" class="label-large text-primary">Create account</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="snackbar-wrapper" data-snackbar-wrapper>
+      
+    </div>
+  </body>
+</html>

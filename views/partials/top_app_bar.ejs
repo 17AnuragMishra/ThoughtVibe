@@ -1,142 +1,131 @@
-<%
-    const {
-        userAuthenticated,
-        name,
-        username
-    } = locals.sessionUser || {};
-%>
+<% const {
+  userAuthenticated,
+  name,
+  username,
+  profilePhoto }=locals.sessionUser || {} 
 
-<header class="top-app-bar" data-top-app-bar>
+  const compressedProfilePhotoURL=profilePhoto?.replace("upload/","upload/w_60,h_60,c_auto/q_auto/f_auto/") %>
+  <header class="top-app-bar" data-top-app-bar>
+    <!-- for create blog page -->
+    <% if(locals?.route==="/createblog" ){ %>
+      <button class="icon-btn filled-tonal" aria-label="Go to previous page" data-back-btn>
+        <span class="material-symbols-rounded" aria-hidden="true">
+          chevron_left
+        </span>
+        <div class="state-layer"></div>
+      </button>
+      <% } %>
 
-    <% if (locals.route === '/createblog') { %> 
-        <button class="icon btn filled-tonal" aria-label="Go to previous page" data-back-btn>
-            <span class="material-symbols-outlined">
-                keyboard_arrow_left
-                </span>
-            <div class="state-layer"></div>
-        </button>
-    <% } %>
+        <a href="/" class="logo">
+          <img src="/images/thoughtvibe-logo-white-transparent.svg" width="98" height="24" alt="ThoughtVibe" class="light">
+          <img src="/images/thoughtvibe-logo-black-transparent.svg" width="98" height="24" alt="ThoughtVibe" class="dark">
+        </a>
+        <div class="trailing-action-wrapper">
+          <% if(userAuthenticated){ %>
 
-    <a href="/" class="logo">
-        <img src="/images/thoughtvibe-logo-white-transparent.svg" width="98" height="24" alt="ThoughtVibe" class="light">
-        <img src="/images/thoughtvibe-logo-black-transparent.svg" width="98" height="24" alt="ThoughtVibe" class="dark">
-    </a>
+            <% if(locals?.route !=="/createblog" ){ %>
 
-    <div class="trailing-action-wrapper">
-        
-        <% if (userAuthenticated) { %>
-            <% if (locals.route !== '/createblog') { %>
-                <a href="/createblog" class="btn btn-fill">
-            <span class="material-symbols-outlined">
-                edit
-            </span>
-            <p class="Label-large">Write</p>
-            <div class="state-layer"></div>
-                </a>    
-             <% } %>
-            <div class="menu-wrapper" data-menu-wrapper>
-            <button class="icon-btn" data-menu-toggler>
-                <div class="avatar">
-                    <p class="title-medium">
-                        <%=name.at()%>
-                    </p>
-                </div>
+              <a href="/createblog" class="btn btn-fill">
+                <span class="material-symbols-rounded leading-icon">edit</span>
+                <p class="label-large">Write</p>
                 <div class="state-layer"></div>
-            </button>
+              </a>
 
-            <div class="menu" data-menu>
-
-                <div class="list-item small">
+              <% } %>
+                <div class="menu-wrapper" data-menu-wrapper>
+                  <button class="icon-btn" data-menu-toggler>
                     <div class="avatar">
-                        <p class="title-medium">
-                            <%=name.at()%>
-                        </p>
+                      <% if(compressedProfilePhotoURL){ %>
+                        <img src="<%=compressedProfilePhotoURL%>" alt="<%=name%>" class="img-cover" width="40"
+                          height="40">
+                        <% }else{ %>
+                          <p class="title-medium">
+                            <%= name.at() %>
+                          </p>
+                          <% } %>
                     </div>
-                    <div>
+                    <div class="state-layer"></div>
+                  </button>
+
+                  <div class="menu" data-menu>
+                    <div class="list-item small">
+                      <div class="avatar">
+                        <% if(compressedProfilePhotoURL){ %>
+                          <img src="<%=compressedProfilePhotoURL%>" alt="<%=name%>" class="img-cover" width="40"
+                            height="40">
+                          <% }else{ %>
+                            <p class="title-medium">
+                              <%= name.at() %>
+                            </p>
+                            <% } %>
+                      </div>
+                      <div>
                         <p class="label-small text-primary truncate-online">
-                            <%=username%>
+                          <%= username %>
                         </p>
                         <p class="body-large text-on-surface">
-                            <%=name%>
+                          <%= name %>
                         </p>
+                      </div>
+                      <div class="state-layer"></div>
+                      <a href="/profile/<%=username%>" title="<%=name%>" class="list-item-link"></a>
                     </div>
+                    <div class="divider"></div>
 
-                    <div class="state-layer"></div>
+                    <a href="/dashboard" class="menu-item">
+                      <span class="icon material-symbols-rounded" aria-hidden="true">
+                        dashboard
+                      </span>
+                      <p class="label-large">Dashboard</p>
+                      <div class="state-layer"></div>
+                    </a>
 
-                    <a href="/profile/<%=username%>" title="<%=name%>" class="list-item-link"></a>
+                    <a href="/readinglist" class="menu-item">
+                      <span class="icon material-symbols-rounded" aria-hidden="true">
+                        bookmark
+                      </span>
+                      <p class="label-large">Reading list</p>
+                      <div class="state-layer"></div>
+                    </a>
+
+                    <a href="/settings" class="menu-item">
+                      <span class="icon material-symbols-rounded" aria-hidden="true">
+                        settings
+                      </span>
+                      <p class="label-large">Settings</p>
+                      <div class="state-layer"></div>
+                    </a>
+                    <div class="divider"></div>
+
+                    <form action="/logout" method="post">
+                      <button type="submit" class="menu-item">
+                        <span class="icon material-symbols-rounded" aria-hidden="true">
+                          logout
+                        </span>
+                        <p class="label-large">Sign out</p>
+                        <div class="state-layer"></div>
+                      </button>
+                    </form>
+                  </div>
                 </div>
 
-                <div class="divider"></div>
-                
-                <a href="/dashboard" class="menu-item">
-                    <span class="material-symbols-outlined" aria-hidden="true">
-                        dashboard
-                    </span>
-
-                    <p class="label-large">Dashboard</p>
-
+                <% } else{ %>
+                  <a href="/login" class="btn btn-text">
+                    <p class="label-large">Login</p>
                     <div class="state-layer"></div>
-                </a>
+                  </a>
 
-                <a href="/readingList" class="menu-item">
-                    <span class="material-symbols-outlined" aria-hidden="true">
-                        bookmark
-                    </span>
-
-                    <p class="label-large">Reading List</p>
-
+                  <a href="/register" class="btn btn-fill">
+                    <p class="label-large">Create account</p>
                     <div class="state-layer"></div>
-                </a>
-
-                <a href="/settings" class="menu-item">
-                    <span class="material-symbols-outlined">
-                        settings
-                    </span>
-
-                    <p class="label-large">Setting</p>
-
-                    <div class="state-layer"></div>
-                </a>
-
-                <div class="divider"></div>
-
-                <form action="/logout" method="post">
-                    <button type="submit" class="menu-item">
-                        
-                        <span class="material-symbols-outlined">
-                            logout
-                        </span>
-    
-                        <p class="label-large">Sign out</p>
-    
-                        <div class="state-layer"></div>
-
-                    </button>
-                </form>
-            </div>    
-            </div>
-
-        <% } else { %>
-            <a href="/login" class="btn btn-text">
-            <p class="label-large">Login</p>
-
-            <div class="state-layer"></div>
-            </a>
-
-            <a href="/register" class="btn btn-fill">
-            <p class="label-large">Register</p>
-
-            <div class="state-layer"></div>
-            </a>
-        <% } %>
-    </div>
-
-<!-- Prograss BAR -->
-
-
-<div class="progress-bar" data-progress-bar>
-    <div class="prograss-active-indicator"></div>
-    <div class="progrss-track"></div>
-</div>
-
-</header>
+                  </a>
+                  <% } %>
+        </div>
+        <!--
+    * PROGRESS BAR
+    -->
+        <div class="progress-bar" data-progress-bar>
+          <div class="progress-active-indicator"></div>
+          <div class="progress-track"></div>
+        </div>
+  </header>

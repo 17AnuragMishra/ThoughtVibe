@@ -1,30 +1,25 @@
-'use strict';
-
-const $snackbarWrapper = document.querySelector('[data-snackbar-wrapper]');
-let lastTimeout = null;
 
 
-const Snackbar = (props) =>{ 
-    // create element for the snackbar
-    const $snackbar = document.createElement('div');
-    $snackbar.classList.add('snackbar');
-    props.type && $snackbar.classList.add('props.type');
-    $snackbar.innerHTML = `
-        <p class="body-medium snackbar-text">
-            ${props.message}
-        </p>
-    `;
-    
-    //clear previous snackbar and append new onw
-    $snackbarWrapper.innerHTML = '';
-    $snackbarWrapper.append($snackbar);
+const snackbarWrapper = document.querySelector("[data-snackbar-wrapper]");
+let lasteTimeout = null;
 
+const Snackbar = (props) => {
+  const snackbar = document.createElement("div");
+  snackbar.classList.add("snackbar");
+  props.type && snackbar.classList.add(props.type);
+  snackbar.innerHTML = `
+    <p class="body-medium snackbar-text">${props.message}</p>
+  `;
 
-    //remove snackbar affter 10 second
-    clearTimeout(lastTimeout);
-    lastTimeout = setTimeout(() => {
-        $snackbarWrapper.removeChild($snackbar);
-    }, 10000);
-}
+  //   clear previus snackbar and append new one
+  snackbarWrapper.innerHTML = "";
+  snackbarWrapper.append(snackbar);
+
+  //   remove snackbar
+  clearTimeout(lasteTimeout);
+  lasteTimeout = setTimeout(() => {
+    snackbarWrapper.removeChild(snackbar);
+  }, 10000);
+};
 
 export default Snackbar;

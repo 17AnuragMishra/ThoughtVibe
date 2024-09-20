@@ -1,43 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <%- include('../layouts/head', { title: "Home | ThoughtVibe" }) %>
-    
+  <head>
+    <%- include("../partials/head",{title:"Home | ThoughtVibe"}) %>
     <script src="/js/script.js" defer></script>
-</head>
-<body>
+  </head>
+  <body>
+    <!-- 
+     * TOP APP BAR
+    -->
+    <%- include("../partials/top_app_bar") %>
 
-    <!-- TOP APP BAR -->
+    <div class="main">
+      <article class="page home-page">
+        <div class="container">
+          <h2 class="headline-small page-title text-on-surface">
+            Latest blogs
+          </h2>
 
-    <%- include('../partials/top_app_bar')%>
+          <!-- All BlogPost Render Here -->
+          <div class="blog-list">
+            <% if(latestBlog.length > 0) {%> <% latestBlog.forEach(blog=>{ %>
+            <%- include("../partials/card",{blog}) %> <% }) %> <% } %>
+          </div>
 
+          <!-- Pagination Show Here ->
+          <% if(pagination.next || pagination.prev) { %>
+           <%- include("../partials/pagination") %>
+             <% }%>
+        </div>
+      </article>
+    </div>
 
-    <main class="main">
-
-        <article class="page home-page">  
-            <div class="container">
-                <h2 class="headline-small page-title text-on-surface">
-                    Latest blogs
-                </h2>
-
-                <div class="blog-list">
-
-                    <% if (locals.latestBlogs.length) { %>
-                        <% locals.latestBlogs.forEach(blog => { %>
-                            <%- include('../partials/card', { blog }) %>
-                        <% }) %>                        
-                    <% } %>
-                </div> 
-            </div>            
-        </article>
-        
-    </main>
-
-
-    <!-- Footer -->
-
-    <%- include('../layouts/footer')%>
-
-
-</body>
+    <!-- 
+       * Footer
+      ->
+    <%- include("../partials/footer") %>
+  </body>
 </html>
