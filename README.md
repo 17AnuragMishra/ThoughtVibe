@@ -27,11 +27,14 @@ To get started with ThoughtVibe, follow these steps:
    ```bash
    git clone https://github.com/your-username/ThoughtVibe.git
 2. **Navigate to the project directory:**
-   ```cd ThoughtVibe-blog-application
+   ```bash
+   cd ThoughtVibe-blog-application
 3. **Install dependencies:**
-   ```npm install
+   ```bash
+   npm install
 4. **Start the application:**
-   ```npm start
+   ```bash
+   npm start
 
 ## Usage 🚀
 
