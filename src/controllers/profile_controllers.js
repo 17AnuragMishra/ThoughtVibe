@@ -1,8 +1,8 @@
 /**
  * custome module
  **/
-const User = require("../models/user_model");
-const Blog = require("../models/blog_model");
+const User = require("../models/userModel");
+const Blog = require("../models/blogModel");
 const getPagination = require("../utilities/getPagination");
 
 const renderProfile = async (req, res) => {

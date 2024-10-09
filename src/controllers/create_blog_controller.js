@@ -7,8 +7,8 @@ const crypto = require("crypto");
  *  custom modules
  **/
 const uploadToCloudinary = require("../config/cloudinary_config");
-const Blog = require("../models/blog_model");
-const User = require("../models/user_model");
+const Blog = require("../models/blogModel");
+const User = require("../models/userModel");
 const getReadingTime = require("../utilities/getReadingTime");
 
 const renderCreateBlog = async (req, res) => {

@@ -2,8 +2,8 @@
  *  node modules
  **/
 const mongoose = require("mongoose");
-const Blog = require("../models/blog_model");
-const User = require("../models/user_model");
+const Blog = require("../models/blogModel");
+const User = require("../models/userModel");
 const markdown = require("../config/markdown_it_config");
 
 /**
