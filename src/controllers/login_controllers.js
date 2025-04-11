@@ -1,10 +1,10 @@
 
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcryptjs');
 
 /**
  * custome module
  **/
-const User = require("../models/UserModel");
+const User = require("../models/userModel");
 
 // * Render Login Page
 const renderLogin = (req, res, next) => {

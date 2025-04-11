@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
  *  custom modules
  **/
 const Blog = require("../models/blogModel");
-const User = require("../models/UserModel");
+const User = require("../models/userModel");
 
 // Add Rewaction in Blog
 const updateReaction = async (req, res) => {

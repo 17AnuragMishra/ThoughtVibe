@@ -1,13 +1,13 @@
 /**
  *
  **/
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcryptjs');
 const mongoose = require("mongoose");
 /**
  *  custom modules
  **/
 const uploadToCloudinary = require("../config/cloudinary_config");
-const User = require("../models/UserModel");
+const User = require("../models/userModel");
 const Blog = require("../models/blogModel");
 
 // Add Rewaction in Blog

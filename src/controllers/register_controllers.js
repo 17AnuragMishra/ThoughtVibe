@@ -1,9 +1,9 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcryptjs');
 
 /**
  * custome module
  **/
-const User = require("../models/UserModel");
+const User = require("../models/userModel");
 const generateUsername = require("../utilities/generateUsernameUtil");
 /**
  *   Controller for Render the registration page

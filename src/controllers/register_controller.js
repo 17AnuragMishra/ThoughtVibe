@@ -1,6 +1,5 @@
-
-const bcrypt = require('bcrypt');
-const User = require('../models/user_model');
+const bcrypt = require('bcryptjs');
+const User = require('../models/userModel');
 const generateUsername = require('../utils/generate_username_utils');
 
 const renderRegister = (req, res) => {

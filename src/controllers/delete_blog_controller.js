@@ -2,7 +2,7 @@
  *  custom modules
  **/
 const Blog = require("../models/blogModel");
-const User = require("../models//UserModel");
+const User = require("../models//userModel");
 
 const deleteBlog = async (req, res) => {
   try {
