@@ -17,10 +17,19 @@ export default function TopAppBar({ route }: TopAppBarProps) {
 
   console.log("current user: ",user);
 
-  const compressedProfilePhotoURL = user?.profilePhoto?.replace(
-    "upload/",
-    "upload/w_60,h_60,c_auto/q_auto/f_auto/"
-  );
+  let compressedProfilePhotoURL = '/images/profilePhoto-default.jpg';
+  if (user?.profilePhoto) {
+    if (typeof user.profilePhoto === 'string') {
+      compressedProfilePhotoURL = user.profilePhoto.replace('upload/', 'upload/w_40,h_40,c_thumb,g_face,r_max/');
+    } else if (
+      typeof user.profilePhoto === 'object' &&
+      user.profilePhoto !== null &&
+      'url' in user.profilePhoto &&
+      typeof (user.profilePhoto as { url: string }).url === 'string'
+    ) {
+      compressedProfilePhotoURL = (user.profilePhoto as { url: string }).url.replace('upload/', 'upload/w_40,h_40,c_thumb,g_face,r_max/');
+    }
+  }
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 

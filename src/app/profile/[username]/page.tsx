@@ -53,6 +53,7 @@ interface PaginationData {
 export default function ProfilePage() {
   const params = useParams();
   const username = params.username as string;
+  console.log('ProfilePage params:', params, 'username:', username); // Debug log
   const { user } = useAuth();
   
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -70,7 +71,7 @@ export default function ProfilePage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (username) {
+    if (typeof username === 'string' && username.trim() !== '') {
       fetchProfile();
     }
   }, [username]);
@@ -158,6 +159,10 @@ export default function ProfilePage() {
   };
 
   const fetchProfile = async (page = 1) => {
+    if (!username || typeof username !== 'string' || username.trim() === '') {
+      console.warn('fetchProfile called with invalid username:', username);
+      return;
+    }
     try {
       setLoading(true);
       const response = await fetch(`/api/profile/${username}?page=${page}`);

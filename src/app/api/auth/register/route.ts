@@ -24,6 +24,10 @@ export async function POST(request: NextRequest) {
     // Create JWT
     const token = jwt.sign({
       id: newUser._id,
+      username: newUser.username,
+      name: newUser.name,
+      email: newUser.email,
+      profilePhoto: newUser.profilePhoto?.url
     }, process.env.JWT_SECRET!, { expiresIn: '7d' });
 
     // Set cookie
