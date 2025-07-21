@@ -50,24 +50,34 @@ export async function POST(request: NextRequest) {
       },
       message: 'User registered successfully' 
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Registration error:', error);
-    
-    if (error.code === 11000) {
-      if (error.keyPattern?.email) {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      (error as { code: number }).code === 11000
+    ) {
+      const errObj = error as { code: number; keyPattern?: { [key: string]: unknown } };
+      if (errObj.keyPattern?.email) {
         return NextResponse.json({
-          error: "This email is already associated with an account."
+          error: 'Email already exists. Please use a different email address.'
         }, { status: 400 });
       }
-      if (error.keyPattern?.username) {
+      if (errObj.keyPattern?.username) {
         return NextResponse.json({
-          error: "This username is already in use."
+          error: 'Username already exists. Please use a different username.'
         }, { status: 400 });
       }
+      return NextResponse.json({
+        error: 'Duplicate key error.'
+      }, { status: 400 });
     }
-    
-    return NextResponse.json({
-      error: `Failed to register user. ${error.message}`
-    }, { status: 400 });
+    if (error instanceof Error) {
+      return NextResponse.json({
+        error: `Failed to register user. ${error.message}`
+      }, { status: 400 });
+    }
+    return NextResponse.json({ error: 'Failed to register user.' }, { status: 400 });
   }
 } 

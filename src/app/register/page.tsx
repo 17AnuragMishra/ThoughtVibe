@@ -59,7 +59,7 @@ export default function Register() {
         setError(data.error || 'Registration failed');
       }
     } catch (err) {
-      setError('Registration failed. Please try again.');
+      setError('registration failed:' + err);
     } finally {
       setLoading(false);
     }

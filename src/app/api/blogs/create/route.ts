@@ -5,6 +5,7 @@ import { Blog } from '@/models/blogModel';
 import { User } from '@/models/userModel';
 import { getReadingTime } from '@/utils/getReadingTime';
 import { uploadToCloudinary } from '@/lib/cloudinary';
+import { Types } from 'mongoose';
 
 export async function POST(request: NextRequest) {
   try {
@@ -38,8 +39,10 @@ export async function POST(request: NextRequest) {
     });
 
     // Update user's blog
-    user.blogs.push(newBlog._id);
-    user.blogPublished++;
+    if (user.blogPublished && user.blogs) {
+      user.blogs.push(newBlog._id as unknown as Types.ObjectId);
+      user.blogPublished++;
+    }
     await user.save();
     
     return NextResponse.json({

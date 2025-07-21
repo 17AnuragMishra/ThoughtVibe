@@ -54,7 +54,7 @@ export default function SettingsPage() {
         setError(data.error || 'Failed to fetch user data');
       }
     } catch (err) {
-      setError('Failed to fetch user data');
+      setError('err:' + err);
     } finally {
       setLoading(false);
     }
@@ -109,12 +109,12 @@ export default function SettingsPage() {
         submitBasicInfo(basicInfo, null);
       }
     } catch (err) {
-      setError('Failed to update profile');
+      setError('err:' + err);
       setLoading(false);
     }
   };
 
-  const submitBasicInfo = async (basicInfo: any, imageData: string | null) => {
+  const submitBasicInfo = async (basicInfo: { name: string; bio: string }, imageData: string | null) => {
     try {
       const response = await fetch('/api/profile/update', {
         method: 'PUT',
@@ -150,7 +150,7 @@ export default function SettingsPage() {
         setError(data.error || 'Failed to update profile');
       }
     } catch (err) {
-      setError('Failed to update profile');
+      setError('err:' + err);
     } finally {
       setLoading(false);
     }
@@ -194,7 +194,7 @@ export default function SettingsPage() {
         setError(data.error || 'Failed to update password');
       }
     } catch (err) {
-      setError('Failed to update password');
+      setError('err:' + err);
     } finally {
       setLoading(false);
     }
@@ -225,7 +225,7 @@ export default function SettingsPage() {
         setError(data.error || 'Failed to delete account');
       }
     } catch (err) {
-      setError('Failed to delete account');
+      setError('err:' + err);
     } finally {
       setLoading(false);
     }

@@ -1,11 +1,11 @@
 export const runtime = 'nodejs';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 import { connectDB } from '@/lib/db';
 import { User } from '@/models/userModel';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     await connectDB();
     const cookieStore = await cookies();

@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import { connectDB } from '@/lib/db';
 import { Blog } from '@/models/blogModel';
-import { User } from '@/models/userModel';
 import { v2 as cloudinary } from 'cloudinary';
 
 export async function GET(
@@ -69,7 +68,7 @@ export async function GET(
       user,
       ownerBlogs
     });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error fetching blog details:', error);
     return NextResponse.json({
       error: 'Failed to fetch blog details'
@@ -103,7 +102,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Blog not found' }, { status: 404 });
     }
 
-    if ((blog.owner as any).username !== username) {
+    if ((blog.owner as unknown as { username: string }).username !== username) {
       return NextResponse.json({ error: 'Unauthorized to edit this blog' }, { status: 403 });
     }
 
@@ -125,7 +124,7 @@ export async function PUT(
           url: result.secure_url,
           public_id: result.public_id
         };
-      } catch (uploadError) {
+      } catch (uploadError: unknown) {
         console.error('Error uploading image:', uploadError);
         return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 });
       }
@@ -153,7 +152,7 @@ export async function PUT(
       success: true, 
       blog: updatedBlog 
     });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error updating blog:', error);
     return NextResponse.json({ error: 'Failed to update blog' }, { status: 500 });
   }

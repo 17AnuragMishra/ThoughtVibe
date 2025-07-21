@@ -31,8 +31,12 @@ export default function Login() {
     try {
       await login(formData.email, formData.password);
       router.push('/');
-    } catch (err: any) {
-      setError(err.message || 'Login failed');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || 'Login failed');
+      } else {
+        setError('An unexpected error occurred.');
+      }
     } finally {
       setLoading(false);
     }
@@ -113,7 +117,7 @@ export default function Login() {
             </form>
           </div>
           <div className="card-footer">
-            <p className="label-large">Don't have an account?</p>
+            <p className="label-large">Don&apos;t have an account?</p>
             <Link href="/register" className="label-large text-primary">Create one</Link>
           </div>
         </div>

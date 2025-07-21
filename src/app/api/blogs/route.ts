@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/db';
-import { Blog, User } from '@/models';
+import { Blog } from '@/models';
 import { getPagination } from '@/utils/getPagination';
 
 export async function GET(request: NextRequest) {
