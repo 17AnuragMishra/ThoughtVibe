@@ -1181,9 +1181,9 @@ body:has(.dialog-root.active) {
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   align-items: stretch;
 }
-.home-page .card:not(:first-child) .card-banner {
+/* .home-page .card:not(:first-child) .card-banner {
   display: none;
-}
+} */
 
 /*-----------------------------------*\
   *  CREATE BLOG
@@ -1692,8 +1692,9 @@ body:has(.dialog-root.active) {
     margin-block: var(--space-6);
   }
   .post-list .list-item{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   /* 
    * SETTINGS PAGE
