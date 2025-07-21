@@ -8,28 +8,39 @@ export async function PUT(request: NextRequest) {
   try {
     await connectDB();
     
-    const { username, name, bio, profilePhoto } = await request.json();
+    const { currentUsername, username, name, bio, profilePhoto } = await request.json();
 
+    if (!currentUsername) {
+      return NextResponse.json({ error: 'Current username is required' }, { status: 400 });
+    }
     if (!username) {
       return NextResponse.json({ error: 'Username is required' }, { status: 400 });
     }
 
-    // Find the user
-    const user = await User.findOne({ username });
-    
+    // Find the user by currentUsername
+    const user = await User.findOne({ username: currentUsername });
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
+    // If username is changing, check for uniqueness
+    if (username !== currentUsername) {
+      const existing = await User.findOne({ username });
+      if (existing) {
+        return NextResponse.json({ error: 'Username is already taken' }, { status: 400 });
+      }
+    }
+
     // Prepare update data
     const updateData: Record<string, unknown> = {};
-    
     if (name) {
       updateData.name = name;
     }
-    
     if (bio !== undefined) {
       updateData.bio = bio;
+    }
+    if (username && username !== currentUsername) {
+      updateData.username = username;
     }
 
     // Handle profile photo upload if provided
@@ -49,7 +60,7 @@ export async function PUT(request: NextRequest) {
 
     // Update the user
     const updatedUser = await User.findOneAndUpdate(
-      { username },
+      { username: currentUsername },
       updateData,
       { new: true }
     ).select('name username bio profilePhoto');

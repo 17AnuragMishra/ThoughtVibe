@@ -23,6 +23,10 @@ export default function SettingsPage() {
   const [success, setSuccess] = useState<string | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [newImage, setNewImage] = useState<File | null>(null);
+  const [username, setUsername] = useState('');
+  const [usernameAvailable, setUsernameAvailable] = useState<boolean | null>(null);
+  const [usernameCheckLoading, setUsernameCheckLoading] = useState(false);
+  const usernameCheckTimeout = useRef<NodeJS.Timeout | null>(null);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -35,6 +39,48 @@ export default function SettingsPage() {
     }
     fetchUserData();
   }, [user, router]);
+
+  useEffect(() => {
+    if (userData?.username) {
+      setUsername(userData.username);
+    }
+  }, [userData]);
+
+  // Debounced username availability check
+  useEffect(() => {
+    if (!username || username === userData?.username) {
+      setUsernameAvailable(null);
+      setUsernameCheckLoading(false);
+      return;
+    }
+    setUsernameCheckLoading(true);
+    if (usernameCheckTimeout.current) clearTimeout(usernameCheckTimeout.current);
+    usernameCheckTimeout.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/username-available?username=${encodeURIComponent(username)}`);
+        const data = await res.json();
+        setUsernameAvailable(data.available);
+      } catch {
+        setUsernameAvailable(null);
+      } finally {
+        setUsernameCheckLoading(false);
+      }
+    }, 500);
+    // Cleanup
+    return () => {
+      if (usernameCheckTimeout.current) clearTimeout(usernameCheckTimeout.current);
+    };
+  }, [username, userData?.username]);
+
+  // Username validation: only allow starting with letter or number, all lowercase
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.toLowerCase();
+    // Remove invalid starting characters
+    value = value.replace(/^[^a-z0-9]+/, '');
+    // Remove invalid characters (allow only a-z, 0-9, and -/_)
+    value = value.replace(/[^a-z0-9-_]/g, '');
+    setUsername(value);
+  };
 
   const fetchUserData = async () => {
     try {
@@ -88,10 +134,22 @@ export default function SettingsPage() {
     setError(null);
     setSuccess(null);
 
+    if (username !== userData?.username && usernameAvailable === false) {
+      setError('Username is already taken.');
+      setLoading(false);
+      return;
+    }
+    if (!/^[a-z0-9][a-z0-9-_]*$/.test(username)) {
+      setError('Username must start with a letter or number and contain only lowercase letters, numbers, hyphens, or underscores.');
+      setLoading(false);
+      return;
+    }
+
     const formData = new FormData(e.currentTarget);
     const basicInfo = {
       name: formData.get('name') as string,
-      username: formData.get('username') as string,
+      username: username,
+      currentUsername: userData?.username,
       email: formData.get('email') as string,
       bio: formData.get('bio') as string,
     };
@@ -114,7 +172,7 @@ export default function SettingsPage() {
     }
   };
 
-  const submitBasicInfo = async (basicInfo: { name: string; bio: string }, imageData: string | null) => {
+  const submitBasicInfo = async (basicInfo: { name: string; bio: string; username: string; currentUsername?: string }, imageData: string | null) => {
     try {
       const response = await fetch('/api/profile/update', {
         method: 'PUT',
@@ -122,7 +180,8 @@ export default function SettingsPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: user?.username,
+          currentUsername: basicInfo.currentUsername,
+          username: basicInfo.username,
           name: basicInfo.name,
           bio: basicInfo.bio,
           profilePhoto: imageData
@@ -372,10 +431,18 @@ export default function SettingsPage() {
                         id="username"
                         autoComplete="username"
                         placeholder=""
-                        defaultValue={userData?.username}
+                        value={username}
+                        onChange={handleUsernameChange}
                         required
                         className="body-large text-field"
                       />
+                      {usernameCheckLoading && <span className="body-small">Checking username...</span>}
+                      {username && username !== userData?.username && usernameAvailable === true && (
+                        <span className="body-small" style={{ color: 'green' }}>Username available</span>
+                      )}
+                      {username && username !== userData?.username && usernameAvailable === false && (
+                        <span className="body-small" style={{ color: 'red' }}>Username taken</span>
+                      )}
                     </div>
                   </div>
 

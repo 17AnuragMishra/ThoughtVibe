@@ -35,9 +35,9 @@ export default function TopAppBar({ route }: TopAppBarProps) {
 
   const handleLogout = () => {
     if (window.confirm('Are you sure you want to logout?')) {
-      logout();
-      setIsMenuOpen(false);
-      router.push('/');
+    logout();
+    setIsMenuOpen(false);
+    router.push('/');
     }
   };
 
