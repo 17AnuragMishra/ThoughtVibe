@@ -9,6 +9,7 @@ import BlogCard from '../../components/BlogCard';
 import Pagination from '../../components/Pagination';
 import { useAuth } from '../../contexts/AuthContext';
 import { useRef } from 'react';
+import MessageLoading from '../../components/messageLoading';
 
 interface Profile {
   profilePhoto?: {
@@ -189,7 +190,9 @@ export default function ProfilePage() {
         <div className="main">
           <article className="page profile-page">
             <div className="container">
-              <div className="loading">Loading profile...</div>
+              <div className="flex justify-center items-center h-full">
+                <MessageLoading />
+              </div>
             </div>
           </article>
         </div>

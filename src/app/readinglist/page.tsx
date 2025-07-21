@@ -6,6 +6,7 @@ import TopAppBar from '../components/TopAppBar';
 import BlogCard from '../components/BlogCard';
 import Pagination from '../components/Pagination';
 import { useAuth } from '../contexts/AuthContext';
+import MessageLoading from '../components/messageLoading';
 
 interface Blog {
   _id: string;
@@ -84,7 +85,9 @@ export default function ReadingListPage() {
               <h2 className="headline-small page-title text-on-surface">
                 Reading List
               </h2>
-              <div className="loading">Loading reading list...</div>
+              <div className="flex justify-center items-center h-full">
+                <MessageLoading />
+              </div>
             </div>
           </article>
         </div>

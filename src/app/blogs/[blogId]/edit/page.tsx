@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import TopAppBar from '../../../components/TopAppBar';
 import { useAuth } from '../../../contexts/AuthContext';
+import MessageLoading from '../../../components/messageLoading';
 
 interface Blog {
   _id: string;
@@ -226,7 +227,9 @@ export default function EditBlogPage() {
           <article className="page create-blog-page">
             <div className="container">
               <h2 className="page-title text-on-surface headline-small">Edit Blog</h2>
-              <div className="loading">Loading blog...</div>
+              <div className="flex justify-center items-center h-full">
+                <MessageLoading />
+              </div>
             </div>
           </article>
         </div>

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import TopAppBar from './components/TopAppBar';
 import BlogCard from './components/BlogCard';
 import Pagination from './components/Pagination';
+import MessageLoading from './components/messageLoading';
 
 interface Blog {
   _id: string;
@@ -72,7 +73,9 @@ export default function Home() {
               <h2 className="headline-small page-title text-on-surface">
                 Latest blogs
               </h2>
-              <div className="loading">Loading...</div>
+              <div className="flex justify-center items-center h-full">
+                <MessageLoading />
+              </div>
             </div>
           </article>
         </div>

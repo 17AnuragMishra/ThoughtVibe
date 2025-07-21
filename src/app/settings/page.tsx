@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import TopAppBar from '../components/TopAppBar';
 import { useAuth } from '../contexts/AuthContext';
+import MessageLoading from '../components/messageLoading';
 
 interface UserData {
   profilePhoto?: {
@@ -302,7 +303,9 @@ export default function SettingsPage() {
           <article className="page settings-page">
             <div className="container">
               <h2 className="headline-small page-title text-on-surface">Settings</h2>
-              <div className="loading">Loading settings...</div>
+              <div className="flex justify-center items-center h-full">
+                <MessageLoading />
+              </div>
             </div>
           </article>
         </div>

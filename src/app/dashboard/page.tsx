@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import TopAppBar from '../components/TopAppBar';
 import { useAuth } from '../contexts/AuthContext';
+import MessageLoading from '../components/messageLoading';
 
 interface Blog {
   _id: string;
@@ -93,7 +94,9 @@ export default function DashboardPage() {
           <article className="page dashboard-page">
             <div className="container">
               <h2 className="headline-small page-title text-on-surface">Dashboard</h2>
-              <div className="loading">Loading dashboard...</div>
+              <div className="flex justify-center items-center h-full">
+                <MessageLoading />
+              </div>
             </div>
           </article>
         </div>
@@ -202,8 +205,8 @@ export default function DashboardPage() {
               <div className="post-list">
                 {dashboardData.blogs.length > 0 ? (
                   dashboardData.blogs.map((blog) => (
-                    <div key={blog._id} className="list-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <div key={blog._id} className="list-item flex flex-col justify-between gap-2 sm:flex-row">
+                      <div className="flex flex-col gap-2">
                         <Link
                           href={`/blogs/${blog._id}`}
                           className="title-medium text-link"

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import TopAppBar from '../../components/TopAppBar';
 import BlogCard from '../../components/BlogCard';
 import { useAuth } from '../../contexts/AuthContext';
+import MessageLoading from '../../components/messageLoading';
 
 interface BlogOwner {
   name: string;
@@ -186,7 +187,9 @@ export default function BlogDetailPage() {
         <div className="main">
           <div className="page blog-detail-page">
             <div className="container">
-              <div className="loading">Loading blog...</div>
+              <div className="flex justify-center items-center h-full">
+                <MessageLoading />
+              </div>
             </div>
           </div>
         </div>
