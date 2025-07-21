@@ -1710,3 +1710,61 @@ body:has(.dialog-root.active) {
     gap: var(--space-5);
    }
 }
+
+/* Image Actions for Edit Blog */
+.image-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.image-actions .btn {
+  flex: 1;
+  min-width: 120px;
+  justify-content: center;
+}
+
+.image-actions .btn .leading-icon {
+  margin-right: 8px;
+}
+
+@media (max-width: 480px) {
+  .image-actions {
+    flex-direction: column;
+  }
+  
+  .image-actions .btn {
+    width: 100%;
+  }
+}
+
+/* Blog Owner Actions */
+.blog-owner-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.blog-owner-actions .btn {
+  min-width: 100px;
+}
+
+@media (max-width: 480px) {
+  .blog-owner-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .blog-owner-actions .btn {
+    width: 100%;
+  }
+}
+.image-field-wrapper.drag-active {
+  border: 2px dashed var(--primary-light, #39608f);
+  background: rgba(163, 201, 254, 0.08);
+}
+.image-field-wrapper.drag-active .btn {
+  background: var(--primary-light, #39608f);
+  color: #fff;
+}
